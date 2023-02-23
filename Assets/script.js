@@ -13,12 +13,12 @@ $(function () {
   // useful when saving the description in local storage?
   //
   var saveButton = $('.saveBtn');
-  var taskEntry = document.getElementsByTagName("textarea").value;
+  saveButton.on('click', function() {
+    var taskEntry = document.getElementById("hour-9").childNodes[1].value;
+    localStorage.setItem("task9", taskEntry);
+  });
   // var taskEntry = taskArea.value;
   // taskArea.innerHTML = taskEntry;
-  saveButton.on('click', function() {
-    localStorage.setItem("task", taskEntry);
-  });
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
