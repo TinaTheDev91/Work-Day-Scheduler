@@ -1,11 +1,9 @@
-var today = dayjs();
-$('#currentDay').text(today.format('MMMM D, YYYY'));
 
 
 $(function () {
   
   // adding previously entered data to the task fields
-
+  
   document.getElementById("hour-9").childNodes[3].innerHTML = localStorage.getItem("task9");
   document.getElementById("hour-10").childNodes[3].innerHTML = localStorage.getItem("task10");
   document.getElementById("hour-11").childNodes[3].innerHTML = localStorage.getItem("task11");
@@ -66,37 +64,53 @@ $(function () {
   
   // time variables
   
-  var hour = dayjs().hour();
-  var time = $('.time');
-  var timeOfDay = time.text();
-  var timeOfDayParse = parseInt(timeOfDay);
-  var militaryTime;
+  var today = dayjs();
+  $('#currentDay').text(today.format('MMMM D, YYYY'));
+  var currentHour = dayjs().hour();
+
+  console.log("current hour", currentHour)
+
+  // var hour = dayjs().hour();
+  // var time = $('.time');
+  // var timeOfDay = time.text();
+  // var timeOfDayParse = parseInt(timeOfDay);
+  // var militaryTime;
   
-  console.log(hour);
-  console.log(time);
-  console.log(timeOfDay);
-  console.log(timeOfDayParse);
-  console.log(5);
-  console.log(militaryTime);
+  // // converting to military time
   
-  // converting to military time
-  
-  if (timeOfDayParse >= 1 && timeOfDayParse <= 5) {
-    militaryTime = timeOfDayParse + 12;
-  } else {
-    militaryTime = timeOfDayParse;
-  }
+  // if (timeOfDayParse >= 1 && timeOfDayParse <= 5) {
+  //   militaryTime = timeOfDayParse + 12;
+  // } else {
+  //   militaryTime = timeOfDayParse;
+  // }
+
+  // console.log(hour);
+  // console.log(time);
+  // console.log(timeOfDay);
+  // console.log(timeOfDayParse);
+  // console.log(militaryTime);  
   
   // adding past, present and future classes in respect to the current hour
   
-  if (militaryTime < hour) {
-    time.parent().addClass("past");
-  } else if (militaryTime > hour) {
-    time.parent().addClass("future");
-  } else {
-    time.parent().addClass("present");
-  }
-    
+  putColor()
+  function putColor() {
+    var blockOfTime = $(".description");
+    blockOfTime.each(function(){
+      var hour = $(this).attr("id")
+      console.log("this is the hour", hour);
+      if (currentHour > hour) {
+        $(this).addClass("past");
+      } else if (currentHour < hour) {
+        $(this).remove("present")
+        $(this).remove("past")
+        $(this).addClass("future");
+      } else if (currentHour == hour) {
+        $(this).remove("past")
+        $(this).addClass("present");
+      }
+
+      })
+    }
 });
 
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
